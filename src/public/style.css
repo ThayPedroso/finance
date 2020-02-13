@@ -1,0 +1,17 @@
+.navbar {
+    background-color: #000044;
+}
+
+nav .navbar-brand .orange
+{
+    color: orangered;
+}
+
+.nav-pills .nav-link.active
+{
+    background-color: orangered;
+}
+
+a {
+    color: #ffffff;
+}

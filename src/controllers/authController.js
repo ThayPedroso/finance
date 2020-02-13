@@ -1,5 +1,8 @@
-const User = require('../models/users')
+const path = require('path')
 const bcrypt = require('bcryptjs')
+
+const rootDir = require('../util/path')
+const User = require('../models/users')
 
 module.exports = {
     async register(req, res) {
@@ -21,6 +24,9 @@ module.exports = {
             return res.status(400).send({ error: 'Registration failed' })
         }
     },
+    registerScreen (req, res) {
+        res.status(200).sendFile(path.join(rootDir, 'views', 'register.html'))
+    },
     async authenticate (req, res) {
         const { email, password } = req.body
 
@@ -38,5 +44,8 @@ module.exports = {
         user.password = undefined
 
         res.send({ user })
+    },
+    authenticateScreen (req, res) {
+        res.status(200).sendFile(path.join(rootDir, 'views', 'authenticate.html'))
     }
 }

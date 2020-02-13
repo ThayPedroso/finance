@@ -9,6 +9,8 @@ const port = 3001
 app.use(cors())
 //app.use(cors({ origin: 'http://localhost:3000' }))
 
+app.use(express.static('src/public'))
+
 // to all responses in JSON format
 app.use(express.json())
 
