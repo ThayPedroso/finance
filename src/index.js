@@ -1,18 +1,33 @@
 const express = require('express')
-const cors = require('cors')
 const routes = require('./routes')
+const passport = require('passport')
+const flash = require('express-flash')
+const session = require('express-session')
+const methodOverride = require('method-override')
 
 const app = express()
 
 const port = 3001
 
-app.use(cors())
-//app.use(cors({ origin: 'http://localhost:3000' }))
+const initializePassport = require('./passport-config')
+initializePassport(
+    passport 
+)
 
 app.use(express.static('src/public'))
 
-// to all responses in JSON format
-app.use(express.json())
+app.set('view-engine', 'ejs')
+app.set('views', 'src/views')
+app.use(express.urlencoded({ extended: false }))
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(methodOverride('_method'))
 
 app.use(routes)
 

@@ -1,12 +1,20 @@
-const path = require('path')
-const bcrypt = require('bcryptjs')
-
-const rootDir = require('../util/path')
 const User = require('../models/users')
 
 module.exports = {
-    async register(req, res) {
+    index (req, res) {
+        res.render('index.ejs', { username: req.user.username })
+    },
+    
+    getLogin (req, res) {
+        res.render('login.ejs')
+    },
+    
+    getRegister (req, res) {
+        res.render('register.ejs')
+    },
+    async postRegister (req, res) {
         const { username, email } = req.body
+
 
         try {
             if (await User.findOne({ email })){
@@ -18,34 +26,17 @@ module.exports = {
             // erase password from user return
             user.password = undefined
 
-            return res.send({ user })
+            res.redirect('/login')
 
         } catch (err) {
-            return res.status(400).send({ error: 'Registration failed' })
+            res.status(400).send({ error: 'Registration failed' })
+            res.redirect('/register')
         }
     },
-    registerScreen (req, res) {
-        res.status(200).sendFile(path.join(rootDir, 'views', 'register.html'))
-    },
-    async authenticate (req, res) {
-        const { email, password } = req.body
-
-        const user = await User.findOne({ email }).select('+password')
-
-        if(!user) {
-            return res.status(400).send({ error: 'User not found '})
-        }
-
-        if(!await bcrypt.compare(password, user.password)) {
-            return res.status(400).send({ error: 'Invalid password'})
-        }
-
-        // erase password from user return
-        user.password = undefined
-
-        res.send({ user })
-    },
-    authenticateScreen (req, res) {
-        res.status(200).sendFile(path.join(rootDir, 'views', 'authenticate.html'))
+    
+    logout (req, res) {
+        req.logOut()
+        res.redirect('/login')
     }
 }
+
