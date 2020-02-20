@@ -1,18 +1,41 @@
-const path = require('path')
 const { Router } = require('express')
+const passport = require('passport')
 
-const rootDir = require('./util/path')
 const authController = require('./controllers/authController')
 const financeController = require('./controllers/financeController')
 
 const routes = Router()
 
-routes.get('/auth/register', authController.registerScreen)
-routes.post('/auth/register', authController.register)
+routes.get('/', checkAuthenticated, authController.index)
 
-routes.get('/auth/authenticate', authController.authenticateScreen)
-routes.post('/auth/authenticate', authController.authenticate)
+routes.get('/login', checkNotAuthenticated, authController.getLogin)
 
-routes.get('/', financeController.home)
+routes.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}))
+
+routes.get('/register', checkNotAuthenticated, authController.getRegister)
+
+routes.post('/register', checkNotAuthenticated, authController.postRegister)
+
+routes.delete('/logout', authController.logout)
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+
+    res.redirect('/login')
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+
+    next()
+}
 
 module.exports = routes
