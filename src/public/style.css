@@ -12,6 +12,21 @@ nav .navbar-brand .orange
     background-color: orangered;
 }
 
+.btn-outline-success {
+    color: orangered;
+    border-color: orangered;
+}
+
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: orangered;
+    border-color: orangered;
+}
+
 a {
     color: #ffffff;
+}
+
+.jumbotron {
+    background-color: #ffffff;
 }

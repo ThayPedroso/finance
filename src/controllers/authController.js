@@ -6,11 +6,11 @@ module.exports = {
     },
     
     getLogin (req, res) {
-        res.render('login.ejs')
+        res.render('login.ejs', { layout: 'loginLayout' })
     },
     
     getRegister (req, res) {
-        res.render('register.ejs')
+        res.render('register.ejs', { layout: 'loginLayout' })
     },
     async postRegister (req, res) {
         const { username, email } = req.body
