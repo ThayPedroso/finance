@@ -14,6 +14,13 @@ function initialize(passport){
 
         try {
             if (await bcrypt.compare(password, user.password)) {
+                
+                // erase password from user return
+                user.password = undefined
+
+                // erase cash from user return
+                user.cash = undefined
+
                 return done(null, user)
             } else {
                 return done(null, false, {message: 'Password incorrect'})
@@ -27,6 +34,13 @@ function initialize(passport){
     passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser(async (_id, done) => { 
         const user = await User.findOne({ _id })
+
+        // erase password from user return
+        user.password = undefined
+
+        // erase cash from user return
+        user.cash = undefined
+
         return done(null, user)
     })
 }

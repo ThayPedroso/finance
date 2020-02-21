@@ -42,4 +42,8 @@ routes.get('/quote', checkAuthenticated, financeController.getQuote)
 
 routes.post('/quote', checkAuthenticated, financeController.quote)
 
+routes.get('/buy', checkAuthenticated, financeController.getBuy)
+
+routes.post('/buy', checkAuthenticated, financeController.buy)
+
 module.exports = routes
