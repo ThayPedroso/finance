@@ -1,0 +1,23 @@
+<%- contentFor('body') %>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col">
+            <form action="/quote" method="POST">
+                <div class="form-group">
+                  <label for="symbol">Quote Symbol</label>
+                  <input type="text" class="form-control" name="symbol" placeholder="Symbol">
+                </div>
+                <button type="submit" class="btn btn-primary">Quote</button>
+            </form>
+        </div>
+        <div class="col">
+            <% if (companyName) { %>
+                <div class="row">
+                    <p>Stock <%= companyName %> current price is $<%= latestPrice %>.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+

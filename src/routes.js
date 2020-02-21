@@ -38,4 +38,8 @@ function checkNotAuthenticated(req, res, next) {
     next()
 }
 
+routes.get('/quote', checkAuthenticated, financeController.getQuote)
+
+routes.post('/quote', checkAuthenticated, financeController.quote)
+
 module.exports = routes
