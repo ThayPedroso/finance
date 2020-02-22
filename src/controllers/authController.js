@@ -2,7 +2,7 @@ const User = require('../models/users')
 
 module.exports = {
     index (req, res) {
-        res.render('index.ejs', { username: req.user.username })
+        res.render('home.ejs', { username: req.user.username })
     },
     
     getLogin (req, res) {

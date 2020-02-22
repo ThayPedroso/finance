@@ -2,6 +2,7 @@ const axios = require('axios')
 require('dotenv').config()
 
 const User = require('../models/users')
+const Transaction = require('../models/transactions')
 
 const api_key = process.env.IEX_API_KEY
 
@@ -63,14 +64,66 @@ module.exports = {
             res.render('buy.ejs', { error: 'Insuficient cash', message: undefined })
         }
 
-        // Update database
+        // Update users database
         const userUpdated = await User.findByIdAndUpdate( _id, { 
             cash: user.cash - purchaseTotal, 
         }, { new: true }) // return updated project
-        
-        console.log(userUpdated)
+
+        // format new transaction
+        const newTransaction = {
+            user_id: req.user._id,
+            symbol: req.body.symbol,
+            shares: req.body.shares,
+            totalPrice: purchaseTotal
+        } 
+
+        // Insert transaction
+        await Transaction.create(newTransaction)
 
         res.render('buy.ejs', { error: undefined, message: `Successfully complete purchase. Your current cash is $${userUpdated.cash}` })        
+    },
+    async index (req, res) {
+
+        const _id = req.user._id
+
+        // Database consult
+        Transaction.aggregate([
+            {
+                $match: { "user_id": _id }
+            },
+            { 
+                $group: { 
+                    _id: "$symbol", 
+                    sumShares: { $sum: "$shares" },
+                }
+            },
+        ], 
+        async function (err, boughtShares) {
+
+            // Variable to store the sum of all selected shares
+            sumSharesCurrentValues = 0
+
+            // Variable to store the sum of share's values plus user's cash
+            totalCash = 0
+
+            for (let element of boughtShares) {
+               //Consult current stock price from API
+                const stock = await lookup(element._id)
+                // Add API information to boughtShares
+                element.latestPrice = stock.latestPrice
+                element.companyName = stock.companyName
+                element.total = stock.latestPrice * element.sumShares
+
+                sumSharesCurrentValues += stock.latestPrice * element.sumShares
+            }
+
+            // Retrieve user cash from database
+            const user = await User.findOne({ _id })
+
+            totalCash = user.cash + sumSharesCurrentValues
+
+            res.render('index.ejs', { allShares: boughtShares, cash: user.cash, totalCash: totalCash })
+        })
     }
 }
 

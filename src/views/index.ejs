@@ -1,3 +1,45 @@
 <%- contentFor('body') %>
 
-<h1>Hi <%= username %></h1>
+<div class="container">
+    <div class="row">
+        <div class="col mt-5">
+            <h2>Position</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Shares</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% allShares.forEach(function(element) { %>
+                        <tr>
+                            <td><%= element._id %></td>
+                            <td><%= element.companyName %></td>
+                            <td><%= element.sumShares %></td>
+                            <td><%= element.latestPrice %></td>
+                            <td><%= element.total %></td>
+                        </tr>
+                    <% }) %>
+                    <tr>
+                        <td>Cash</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><%= cash %></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong><%= totalCash %></strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
