@@ -2,7 +2,12 @@ const { Router } = require('express')
 const passport = require('passport')
 
 const authController = require('./controllers/authController')
-const financeController = require('./controllers/financeController')
+const quoteController = require('./controllers/quoteController')
+const buyController = require('./controllers/buyController')
+const sellController = require('./controllers/sellController')
+const indexController = require('./controllers/indexController')
+const historyController = require('./controllers/historyController')
+const depositController = require('./controllers/depositController')
 
 const routes = Router()
 
@@ -22,6 +27,26 @@ routes.post('/register', checkNotAuthenticated, authController.postRegister)
 
 routes.delete('/logout', authController.logout)
 
+routes.get('/quote', checkAuthenticated, quoteController.getQuote)
+
+routes.post('/quote', checkAuthenticated, quoteController.quote)
+
+routes.get('/buy', checkAuthenticated, buyController.getBuy)
+
+routes.post('/buy', checkAuthenticated, buyController.buy)
+
+routes.get('/index', checkAuthenticated, indexController.index)
+
+routes.get('/sell', checkAuthenticated, sellController.getSell)
+
+routes.post('/sell', checkAuthenticated, sellController.sell)
+
+routes.get('/history', checkAuthenticated, historyController.history)
+
+routes.get('/deposit', checkAuthenticated, depositController.getDeposit)
+
+routes.post('/deposit', checkAuthenticated, depositController.deposit)
+
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
@@ -37,25 +62,5 @@ function checkNotAuthenticated(req, res, next) {
 
     next()
 }
-
-routes.get('/quote', checkAuthenticated, financeController.getQuote)
-
-routes.post('/quote', checkAuthenticated, financeController.quote)
-
-routes.get('/buy', checkAuthenticated, financeController.getBuy)
-
-routes.post('/buy', checkAuthenticated, financeController.buy)
-
-routes.get('/index', checkAuthenticated, financeController.index)
-
-routes.get('/sell', checkAuthenticated, financeController.getSell)
-
-routes.post('/sell', checkAuthenticated, financeController.sell)
-
-routes.get('/history', checkAuthenticated, financeController.history)
-
-routes.get('/deposit', checkAuthenticated, financeController.getDeposit)
-
-routes.post('/deposit', checkAuthenticated, financeController.deposit)
 
 module.exports = routes
