@@ -1,3 +1,38 @@
 <%- contentFor('body') %>
 
-<h1>Hi <%= username %></h1>
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Hello <%= username %></h1>
+        <h4>Welcome to Rich, your personal investiment portal. Here you can boost your earnings.</h4>
+        <h4>Now you are with the best player in market. Come and get Rich with us. </h4>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Quote</h2>
+            <p>We enable real time stock's current price. You can consult with the fastest API available in market.</p>
+            <p>
+                <a href="/quote" class="btn btn-secondary" role="button">Quote now</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Buy</h2>
+            <p>We secure your buying so that you don't need to worry. Every order is processed as soon as possible.</p>
+            <p>
+                <a href="/buy" class="btn btn-secondary" role="button">Buy stock</a>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Sell</h2>
+            <p>We sell your shares quickly. No complications. Every order is processed as soon as possible.</p>
+            <p>
+                <a href="/sell" class="btn btn-secondary" role="button">Sell stock</a>
+            </p>
+        </div>
+    </div>
+<hr>
+</div>
+<footer class="container">
+    <p>© Rich 2017-2020</p>
+</footer>
