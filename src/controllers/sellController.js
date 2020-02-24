@@ -60,12 +60,9 @@ module.exports = {
 
             const _id = req.user._id
 
-            // Retrieve user cash from database
-            const user = await User.findOne({ _id })
-
             // Update users database to user's cash
             const userUpdated = await User.findByIdAndUpdate( _id, { 
-                cash: user.cash + sellTotal, 
+                $inc: { cash: sellTotal }, 
             }, { new: true }) // return updated project
 
             // format new transaction
