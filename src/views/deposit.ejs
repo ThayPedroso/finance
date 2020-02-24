@@ -1,0 +1,32 @@
+<%- contentFor('body') %>
+
+<% if (error) { %>
+    <div class="container">
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    </div>
+<% } %>
+
+<% if (message) { %>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            <%= message %>
+        </div>
+    </div>
+<% } %>
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-5"></div>
+        <div class="col mt-5">
+            <form action="/deposit" method="post">
+                <div class="form-group">
+                    <input autocomplete="off" autofocus class="form-control" name="value" placeholder="Value" type="text">
+                </div>
+                <button class="btn btn-primary" type="submit">Deposit</button>
+            </form>
+        </div>
+        <div class="col mt-5"></div>
+    </div>
+</div>

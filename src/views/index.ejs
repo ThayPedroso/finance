@@ -16,27 +16,29 @@
                 </thead>
                 <tbody>
                     <% allShares.forEach(function(element) { %>
+                        <% if (element.sumShares > 0) { %>
                         <tr>
                             <td><%= element._id %></td>
                             <td><%= element.companyName %></td>
                             <td><%= element.sumShares %></td>
-                            <td><%= element.latestPrice %></td>
-                            <td><%= element.total %></td>
+                            <td>$<%= element.latestPrice %></td>
+                            <td>$<%= element.total %></td>
                         </tr>
+                        <% } %>
                     <% }) %>
                     <tr>
                         <td>Cash</td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><%= cash %></td>
+                        <td>$<%= cash %></td>
                     </tr>
                     <tr>
                         <td><strong>TOTAL</strong></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><strong><%= totalCash %></strong></td>
+                        <td><strong>$<%= totalCash %></strong></td>
                     </tr>
                 </tbody>
             </table>

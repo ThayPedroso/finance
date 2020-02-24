@@ -1,0 +1,29 @@
+<%- contentFor('body') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-5">
+            <h2>Position</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Shares</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% userTransactions.forEach(function(element) { %>
+                        <tr>
+                            <td><%= element.symbol %></td>
+                            <td><%= element.shares %></td>
+                            <td>$<%= (element.totalPrice / Math.abs(element.shares)).toFixed(2) %></td>
+                            <td><%= element.createdAt.toDateString() + ' - ' + element.createdAt.getHours() + 'h' + element.createdAt.getMinutes() + 'min' %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
