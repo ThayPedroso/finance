@@ -8,6 +8,6 @@ module.exports = {
         // Query database for user's transactions
         const userTransactions = await Transaction.find({ user_id: req.user._id })
 
-        res.render('history.ejs', { userTransactions: userTransactions })
+        res.status(200).render('history.ejs', { userTransactions: userTransactions })
     }
 }

@@ -46,7 +46,7 @@ module.exports = {
 
             totalCash = user.cash + sumSharesCurrentValues
 
-            res.render('index.ejs', { allShares: boughtShares, cash: user.cash.toFixed(2), totalCash: totalCash.toFixed(2) })
+            res.status(200).render('index.ejs', { allShares: boughtShares, cash: user.cash.toFixed(2), totalCash: totalCash.toFixed(2) })
         })
     }
 }
