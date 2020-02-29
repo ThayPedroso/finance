@@ -6,10 +6,11 @@ const flash = require('express-flash')
 const session = require('express-session')
 const expressLayouts = require('express-ejs-layouts')
 const methodOverride = require('method-override')
+require('dotenv').config()
 
 const app = express()
 
-const port = 3001
+const port = process.env.PORT || 3000
 
 const initializePassport = require('./passport-config')
 initializePassport(
